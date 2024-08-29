@@ -34,7 +34,7 @@ function PageBody() {
     <>
       <p className="text-center text-lg">Here we are!</p>
       <WalletInfo></WalletInfo>
-      <RandomWord></RandomWord>
+      {/*<RandomWord></RandomWord> */}
     </>
   );
 }
@@ -47,10 +47,12 @@ function WalletInfo() {
       <div>
         <p>Your account address is {address}</p>
         <p>Connected to the network {chain?.name}</p>
+        {/*
         <WalletAction></WalletAction>
         <WalletBalance address={address as `0x${string}`}></WalletBalance>
         
         <TokenInfo address={address as `0x${string}`}></TokenInfo>
+        */}
         <ApiData address={address as `0x${string}`}></ApiData>
       </div>
     );
