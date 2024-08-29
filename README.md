@@ -29,3 +29,19 @@ cd frontend
 yarn install
 yarn start
 ```
+## Group 2
+
+| Unique id | Discord username    |
+| --------- | ------------------- |
+| RAAzLF    | @GRAVER 👾                |
+| 2SyBp0    | @wackozacco        |
+| 10exgX    | @δαλλασκατ    |
+| r5YSqY    | @imchrismayfield          |
+| HhHAQw    | @swooz                |
+| Pok9XD    | @Timster            |
+| T5zGzt    | @Carl Youngblood            |
+
+## Report
+
+Please check into [CONTRACT INTERACTION REPORT](REPORT.md)
+
