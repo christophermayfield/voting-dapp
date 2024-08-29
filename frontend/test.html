@@ -1,0 +1,46 @@
+<p>The current weather in NY is:</p>
+<p id="weather"></p>
+<script>
+  var url =
+    "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=is_day,rain";
+  var request = new XMLHttpRequest();
+  request.open("GET", url, true);
+  request.send();
+  request.onreadystatechange = function () {
+    if (request.readyState == 4 && request.status == 200) {
+      var response = JSON.parse(request.responseText);
+      var weather =
+        response.current.rain > 0
+          ? "rainy"
+          : response.current.is_day < 1
+          ? "sunny"
+          : "night";
+      document.getElementById("weather").innerHTML = weather;
+    }
+  };
+</script>
+<body>
+    <h1>The Last Block in Ethereum Blockchain</h1>
+    <p id="block-number">Fetching...</p>
+
+    <!-- Include ethers.js via a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.0.0/dist/ethers.min.js"></script>
+    <script>
+        // Initialize an ethers provider
+        const provider = new ethers.JsonRpcProvider('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
+
+        // Fetch the latest block number
+        async function fetchLatestBlock() {
+            try {
+                const blockNumber = await provider.getBlockNumber();
+                document.getElementById('block-number').innerText = blockNumber;
+            } catch (error) {
+                console.error('Error fetching block number:', error);
+                document.getElementById('block-number').innerText = 'Error fetching block number';
+            }
+        }
+
+        // Call the function on page load
+        fetchLatestBlock();
+    </script>
+</body>
