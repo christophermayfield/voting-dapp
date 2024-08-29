@@ -8,14 +8,13 @@ Use an oracle to fetch information from a data source of your preference
 Use the data fetched to create the proposals in the constructor of the ballot
 ```
 ### Voting dApp integration guidelines
-```
-Build the frontend using Scaffold ETH 2 as a base
-Build the backend using NestJS to provide the Mint method
-Implement a single POST method
-Request voting tokens from API
-Use these tokens to interact with the tokenized ballot
-All other interactions must be made directly on-chain
-```
+- [x] Build the frontend using Scaffold ETH 2 as a base
+- [ ] Build the backend using NestJS to provide the Mint method
+- [ ] Implement a single POST method
+- [ ] Request voting tokens from API
+- [ ] Use these tokens to interact with the tokenized ballot
+- [ ] All other interactions must be made directly on-chain
+
 ### Getting Started
 Running the backend api's:
 ```shell 
