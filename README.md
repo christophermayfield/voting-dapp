@@ -7,7 +7,7 @@ Request voting tokens to be minted using the API
 Use an oracle to fetch information from a data source of your preference
 Use the data fetched to create the proposals in the constructor of the ballot
 ```
-### Running the Test Script First
+### Voting dApp integration guidelines
 ```
 Build the frontend using Scaffold ETH 2 as a base
 Build the backend using NestJS to provide the Mint method
