@@ -1,11 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
 import type { NextPage } from "next";
-import { useAccount, useBalance, useSignMessage, useReadContract } from "wagmi";
-
-
+import { useAccount, useBalance, useReadContract, useSignMessage } from "wagmi";
 
 const Home: NextPage = () => {
   return (
@@ -38,7 +35,6 @@ function PageBody() {
     </>
   );
 }
-
 
 function WalletInfo() {
   const { address, isConnecting, isDisconnected, chain } = useAccount();
@@ -254,8 +250,8 @@ function TokenAddressFromApi() {
 
   useEffect(() => {
     fetch("http://localhost:3001/contract-address")
-      .then((res) => res.json())
-      .then((data) => {
+      .then(res => res.json())
+      .then(data => {
         setData(data);
         setLoading(false);
       });

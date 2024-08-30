@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import * as tokenJson from './assets/MyToken.json';
-import { createPublicClient, http, Address, formatEther, parseEther } from 'viem';
+import {
+  createPublicClient,
+  http,
+  Address,
+  formatEther,
+  parseEther,
+} from 'viem';
 import { sepolia } from 'viem/chains';
-import { PrivateKeyAccount } from 'viem';
-
 
 @Injectable()
 export class AppService {
@@ -19,7 +23,6 @@ export class AppService {
     });
   }
 
-
   getHello(): string {
     return 'Hello World!';
   }
@@ -32,7 +35,7 @@ export class AppService {
     const name = await this.publicClient.readContract({
       address: this.getContractAddress(),
       abi: tokenJson.abi,
-      functionName: "name"
+      functionName: 'name',
     });
     return name as string;
   }
@@ -41,10 +44,9 @@ export class AppService {
     const totalSupplyBN = await this.publicClient.readContract({
       address: this.getContractAddress(),
       abi: tokenJson.abi,
-      functionName: "totalSupply"
+      functionName: 'totalSupply',
     });
-    const totalSupply = formatEther(totalSupplyBN as bigint);
-    return totalSupply;
+    return formatEther(totalSupplyBN as bigint);
   }
 
   async getTokenBalance(address: string): Promise<string> {
@@ -54,20 +56,18 @@ export class AppService {
       functionName: 'balanceOf',
       args: [address],
     });
-    const balance = formatEther(balanceBN as bigint);
-    return balance;
+    return formatEther(balanceBN as bigint);
   }
 
   async getTransactionReceipt(hash: string) {
     const txReceipt = await this.publicClient.getTransactionReceipt({
       hash: hash as `0x${string}`,
     });
-    const serializedReceipt = JSON.parse(
+    return JSON.parse(
       JSON.stringify(txReceipt, (key, value) =>
         typeof value === 'bigint' ? value.toString() : value,
       ),
     );
-    return serializedReceipt;
   }
 
   async mintTokens(address: string) {
@@ -114,7 +114,6 @@ export class AppService {
     return receipt;
   }
 
-
   async checkMinterRole(address: string) {
     const hasMinterRole = await this.publicClient.readContract({
       address: this.getContractAddress() as `0x${string}`,
@@ -125,11 +124,8 @@ export class AppService {
 
     return hasMinterRole as boolean;
   }
-  
+
   getServerWalletAddress(): string {
     return this.account.address;
   }
-
-  
 }
-
