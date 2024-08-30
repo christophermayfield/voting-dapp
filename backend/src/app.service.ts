@@ -68,7 +68,7 @@ export class AppService {
   async mintTokens(address: any, amount: any) {
     return { return: true };
     // TODO: implement mintTokens
-    // TODO: return 
+    // TODO: return the hash for displaying it in the frontend
   }
 
 
