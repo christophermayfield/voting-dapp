@@ -24,6 +24,7 @@ export class AppService {
       chain: sepolia,
       account: account,
     });
+
   }
 
 
@@ -65,12 +66,6 @@ export class AppService {
     return balance;
   }
 
-  async mintTokens(address: any, amount: any) {
-    return { return: true };
-    // TODO: implement mintTokens
-    // TODO: return the hash for displaying it in the frontend
-  }
-
 
   async getTransactionReceipt(hash: string) {
     const txReceipt = await this.publicClient.getTransactionReceipt({
@@ -84,41 +79,39 @@ export class AppService {
     return serializedReceipt;
   }
 
-  // async mintTokens(body: MintTokenDto) {
-  //   const address = body.address;
-  //   const amount = body.amount;
-  //   try {
-  //     const mintTx = await this.walletClient.writeContract({
-  //       address: this.getContractAddress(),
-  //       abi: tokenJson.abi,
-  //       functionName: 'mint',
-  //       args: [address, parseEther(amount.toString())],
-  //     });
+  async mintTokens(body: MintTokenDto) {
+    const address = body.address;
+    const amount = body.amount;
+    try {
+      const mintTx = await this.walletClient.writeContract({
+        address: this.getContractAddress(),
+        abi: tokenJson.abi,
+        functionName: 'mint',
+        args: [address, parseEther('8')],
+      });
 
-  //     if (await this.waitForTransactionSuccess(mintTx)) {
-  //       console.log(`Minted 100 tokens to ${address}`);
-  //       return {
-  //         result: true,
-  //         message: `Minted 100 tokens to ${address}`,
-  //         transactionHash: mintTx,
-  //       };
-  //     } else {
-  //       return {
-  //         result: false,
-  //         message: `Failed to mint tokens to ${address}`,
-  //         transactionHash: mintTx,
-  //       };
-  //     }
-  //   } catch (error) {
-  //     console.error('Error in mintTokens:', error);
-  //     return {
-  //       result: false,
-  //       message: `Error minting tokens: ${error.message}`,
-  //     };
-  //   }
-  // }
-
-
+      if (await this.waitForTransactionSuccess(mintTx)) {
+        console.log(`Minted 8 tokens to ${address}`);
+        return {
+          result: true,
+          message: `Minted 8 tokens to ${address}`,
+          transactionHash: mintTx,
+        };
+      } else {
+        return {
+          result: false,
+          message: `Failed to mint tokens to ${address}`,
+          transactionHash: mintTx,
+        };
+      }
+    } catch (error) {
+      console.error('Error in mintTokens:', error);
+      return {
+        result: false,
+        message: `Error minting tokens: ${error.message}`,
+      };
+    }
+  }
 
   async waitForTransactionSuccess(txHash: any) {
     const receipt = await this.publicClient.waitForTransactionReceipt({
@@ -131,6 +124,27 @@ export class AppService {
 
     return receipt;
   }
+
+  // **THIS another code snippet version is also working**
+  // async mintTokens(address: any, amount: any) {
+  //   // TODO: implement mintTokens
+  //   const hash = await this.walletClient.writeContract({
+  //     address: this.getContractAddress(),
+  //     abi: tokenJson.abi,
+  //     functionName: "mint",
+  //     args: [address, parseEther('8')],
+  //   });
+  //   return { return: hash }; 
+  // }
+
+  //   // TODO: return the hash for displaying it in the frontend
+  // async getTransactionReceipt(hash: string) {
+  //   const receipt = await this.publicClient.waitForTransactionReceipt({ hash });
+  //     console.log(`Transaction confirmed: ${receipt.status}`);
+  //     console.log(`Block: ${receipt.blockNumber}`);
+  //     return receipt;  
+  // }   
+
 
 
   async checkMinterRole(address: string): Promise<boolean> {

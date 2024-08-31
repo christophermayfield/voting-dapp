@@ -3,6 +3,6 @@ import { ApiProperty } from "@nestjs/swagger";
 export class MintTokenDto {
      @ApiProperty({type: String, required: true, default: "My Address"})
      address: string;
-     @ApiProperty({ type: Number, required: true, default: '5' })
+     @ApiProperty({ type: Number, required: true, default: '6' })
      amount: number;
 }

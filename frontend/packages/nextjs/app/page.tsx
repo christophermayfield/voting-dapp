@@ -273,10 +273,10 @@ function TokenAddressFromApi() {
 }
 
 function RequestTokens(params: { address: string }) {
-  const [data, setData] = useState<{ result: boolean }>();
+  const [data, setData] = useState<{ result: boolean; message: string; transactionHash: string }>();
   const [isLoading, setLoading] = useState(false);
 
-  const body = { address: params.address };
+  const body = { address: params.address, amount: 2 };
 
   if (isLoading) return <p>Requesting tokens from API...</p>;
   if (!data)
@@ -290,8 +290,8 @@ function RequestTokens(params: { address: string }) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
           })
-            .then((res) => res.json())
-            .then((data) => {
+            .then(res => res.json())
+            .then(data => {
               setData(data);
               setLoading(false);
             });
@@ -304,6 +304,8 @@ function RequestTokens(params: { address: string }) {
   return (
     <div>
       <p>Result from API: {data.result ? "worked" : "failed"}</p>
+      <p>Message: {data.message ? data.message : "error"}</p>
+      <p>Tx Hash: {data.transactionHash ? data.transactionHash : "error"}</p>
     </div>
   );
 }

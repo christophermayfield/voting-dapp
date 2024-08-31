@@ -47,24 +47,24 @@ export class AppController {
     return {result: await this.appService.checkMinterRole(address)};
   }
 
-  @Post('mint-tokens')
-  async mintTokens(@Body() body: MintTokenDto) {
-    return {result: await this.appService.mintTokens(body.address, body.amount)};
-  }
-  
   // @Post('mint-tokens')
   // async mintTokens(@Body() body: MintTokenDto) {
-  //   try {
-  //     console.log('Minting tokens:', body);
-  //     const result = await this.appService.mintTokens(body);
-  //     return result;
-  //   } catch (error) {
-  //     console.error('Error in mintTokens:', error);
-  //     return {
-  //       result: false,
-  //       message: 'Internal server error',
-  //       error: error.message,
-  //     };
-  //   }
+  //   return {result: await this.appService.mintTokens(body.address, body.amount)};
   // }
+  
+  @Post('mint-tokens')
+  async mintTokens(@Body() body: MintTokenDto) {
+    try {
+      console.log('Minting tokens:', body);
+      const result = await this.appService.mintTokens(body);
+      return result;
+    } catch (error) {
+      console.error('Error in mintTokens:', error);
+      return {
+        result: false,
+        message: 'Internal server error',
+        error: error.message,
+      };
+    }
+  }
 }
