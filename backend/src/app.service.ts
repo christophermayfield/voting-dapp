@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as tokenJson from './assets/MyToken.json';
+import * as ballotJson from './assets/TokenizedBallot.json';
 import {
   createPublicClient,
   http,
@@ -38,6 +39,10 @@ export class AppService {
 
   getContractAddress(): Address {
     return process.env.TOKEN_ADDRESS as Address;
+  }
+
+  getBallotAddress(): Address {
+    return process.env.BALLOT_ADDRESS as Address;
   }
 
   async getTokenName(): Promise<string> {
@@ -164,5 +169,19 @@ export class AppService {
 
   getServerWalletAddress(): string {
     return this.walletClient.account.address;
+  }
+
+  async getWinningProposal(): Promise<number> {
+    const winningProposalBN = await this.publicClient.readContract({
+      address: this.getBallotAddress(),
+      abi: ballotJson.abi,
+      functionName: 'winningProposal',
+    });
+    // return formatEther(winningProposalBN as bigint);
+
+    const formattedEther = formatEther(winningProposalBN as bigint);
+    const etherAsNumber = Number(formattedEther);
+    return etherAsNumber * 1000000000000000000; // lazy af lol
+
   }
 }

@@ -27,6 +27,11 @@ export class AppController {
     return {result: await this.appService.getTotalSupply()};
   }
 
+  @Get('winning-proposal')
+  async getWinningProposal() {
+    return {result: await this.appService.getWinningProposal()};
+  }
+
   @Get('token-balance/:address')
   async getTokenBalance(@Param('address') address: string) {
     return {result: await this.appService.getTokenBalance(address)};

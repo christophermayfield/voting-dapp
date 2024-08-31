@@ -236,10 +236,14 @@ function ApiData(params: { address: `0x${string}` }) {
   return (
     <div className="card w-96 bg-primary text-primary-content mt-4">
       <div className="card-body">
-        <h2 className="card-title">Testing API Coupling</h2>
+        <h2 className="card-title">API Coupling</h2>
         <TokenAddressFromApi></TokenAddressFromApi>
         <p>MINTING FUNCTION</p>
         <RequestTokens address={params.address}></RequestTokens>
+
+        <p><strong>VOTE RESULTS</strong><br />
+        <WinningProposalFromApi></WinningProposalFromApi>
+        </p>
       </div>
     </div>
   );
@@ -302,6 +306,29 @@ function RequestTokens(params: { address: string }) {
       <p>Result from API: {data.result ? "worked" : "failed"}</p>
       <p>Message: {data.message ? data.message : "error"}</p>
       <p>Tx Hash: {data.transactionHash ? data.transactionHash : "error"}</p>
+    </div>
+  );
+}
+
+function WinningProposalFromApi() {
+  const [data, setData] = useState<{ result: string }>();
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/winning-proposal")
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) return <p>Loading token address from API...</p>;
+  if (!data) return <p>No token address information</p>;
+
+  return (
+    <div>
+      <p>Winning Proposal from API: {data.result}</p>
     </div>
   );
 }
