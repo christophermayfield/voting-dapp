@@ -184,7 +184,6 @@ export class AppService {
 
     const proposalAsNumber = Number(formattedProposal);
     return proposalAsNumber * 1000000000000000000; // lazy af lol
-    
   }
 
   async getWinningProposal(): Promise<number> {
