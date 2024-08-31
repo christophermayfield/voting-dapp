@@ -30,7 +30,6 @@ export class AppService {
       chain: sepolia,
       account: account,
     });
-
   }
 
   getHello(): string {
@@ -68,7 +67,6 @@ export class AppService {
     });
     return formatEther(balanceBN as bigint);
   }
-
 
   async getTransactionReceipt(hash: string) {
     const txReceipt = await this.publicClient.getTransactionReceipt({
@@ -115,7 +113,6 @@ export class AppService {
     }
   }
 
-
   async waitForTransactionSuccess(txHash: any) {
     const receipt = await this.publicClient.waitForTransactionReceipt({
       hash: txHash,
@@ -137,7 +134,7 @@ export class AppService {
   //     functionName: "mint",
   //     args: [address, parseEther('8')],
   //   });
-  //   return { return: hash }; 
+  //   return { return: hash };
   // }
 
   //   // TODO: return the hash for displaying it in the frontend
@@ -145,10 +142,8 @@ export class AppService {
   //   const receipt = await this.publicClient.waitForTransactionReceipt({ hash });
   //     console.log(`Transaction confirmed: ${receipt.status}`);
   //     console.log(`Block: ${receipt.blockNumber}`);
-  //     return receipt;  
-  // }   
-
-
+  //     return receipt;
+  // }
 
   async checkMinterRole(address: string): Promise<boolean> {
     const MINTER_ROLE =
