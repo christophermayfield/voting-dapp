@@ -238,7 +238,7 @@ function ApiData(params: { address: `0x${string}` }) {
       <div className="card-body">
         <h2 className="card-title">Testing API Coupling</h2>
         <TokenAddressFromApi></TokenAddressFromApi>
-        <p>TODO</p>
+        <p>MINTING FUNCTION</p>
         <RequestTokens address={params.address}></RequestTokens>
       </div>
     </div>
