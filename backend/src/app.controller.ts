@@ -27,6 +27,11 @@ export class AppController {
     return {result: await this.appService.getTotalSupply()};
   }
 
+  @Get('recent-votes/:proposal')
+  async getTokegetProposalsnBalance(@Param('proposal') proposal: string) {
+    return {result: await this.appService.getProposals(proposal)};
+  }
+
   @Get('winning-proposal')
   async getWinningProposal() {
     return {result: await this.appService.getWinningProposal()};

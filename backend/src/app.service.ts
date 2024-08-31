@@ -171,6 +171,29 @@ export class AppService {
     return this.walletClient.account.address;
   }
 
+  async getProposals(proposal: string): Promise<string> {
+    const proposalsBN = await this.publicClient.readContract({
+      address: this.getBallotAddress(),
+      abi: ballotJson.abi,
+      functionName: 'proposals',
+      args: [proposal],
+    });
+    return formatEther(proposalsBN as bigint);
+  }
+
+  // async getProposals(): Promise<string> {
+  //   const proposalsBN = await this.publicClient.readContract({
+  //     address: this.getBallotAddress(),
+  //     abi: ballotJson.abi,
+  //     functionName: 'proposals',
+  //     args: [],
+  //   });
+  //   // return formatEther(proposalsBN as bigint);
+
+  //   // const formattedEther = formatEther(proposalsBN as bigint);
+  //   return formatEther(proposalsBN as bigint);
+  // }
+
   async getWinningProposal(): Promise<number> {
     const winningProposalBN = await this.publicClient.readContract({
       address: this.getBallotAddress(),
@@ -184,4 +207,5 @@ export class AppService {
     return etherAsNumber * 1000000000000000000; // lazy af lol
 
   }
+
 }
