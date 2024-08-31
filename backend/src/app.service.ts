@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import * as tokenJson from './assets/MyToken.json';
-import { createPublicClient, http, Address, formatEther, parseEther, createWalletClient } from 'viem';
+import {
+  createPublicClient,
+  http,
+  Address,
+  formatEther,
+  parseEther,
+  createWalletClient,
+} from 'viem';
 import { sepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 import { MintTokenDto } from './dtos/mintToken.dto';
-
 
 @Injectable()
 export class AppService {
@@ -27,7 +33,6 @@ export class AppService {
 
   }
 
-
   getHello(): string {
     return 'Hello World!';
   }
@@ -40,7 +45,7 @@ export class AppService {
     const name = await this.publicClient.readContract({
       address: this.getContractAddress(),
       abi: tokenJson.abi,
-      functionName: "name"
+      functionName: 'name',
     });
     return name as string;
   }
@@ -49,10 +54,9 @@ export class AppService {
     const totalSupplyBN = await this.publicClient.readContract({
       address: this.getContractAddress(),
       abi: tokenJson.abi,
-      functionName: "totalSupply"
+      functionName: 'totalSupply',
     });
-    const totalSupply = formatEther(totalSupplyBN as bigint);
-    return totalSupply;
+    return formatEther(totalSupplyBN as bigint);
   }
 
   async getTokenBalance(address: string): Promise<string> {
@@ -62,23 +66,30 @@ export class AppService {
       functionName: 'balanceOf',
       args: [address],
     });
-    const balance = formatEther(balanceBN as bigint);
-    return balance;
+    return formatEther(balanceBN as bigint);
   }
 
+<<<<<<< HEAD
+=======
+  async mintTokens(address: any, amount: any) {
+    return { return: true };
+    // TODO: implement mintTokens
+    // TODO: return the hash for displaying it in the frontend
+  }
+>>>>>>> fe0dbf30b63090d8156e564b56435190fb7c6c5d
 
   async getTransactionReceipt(hash: string) {
     const txReceipt = await this.publicClient.getTransactionReceipt({
       hash: hash as `0x${string}`,
     });
-    const serializedReceipt = JSON.parse(
+    return JSON.parse(
       JSON.stringify(txReceipt, (key, value) =>
         typeof value === 'bigint' ? value.toString() : value,
       ),
     );
-    return serializedReceipt;
   }
 
+<<<<<<< HEAD
   async mintTokens(body: MintTokenDto) {
     const address = body.address;
     const amount = body.amount;
@@ -112,6 +123,41 @@ export class AppService {
       };
     }
   }
+=======
+  // async mintTokens(body: MintTokenDto) {
+  //   const address = body.address;
+  //   const amount = body.amount;
+  //   try {
+  //     const mintTx = await this.walletClient.writeContract({
+  //       address: this.getContractAddress(),
+  //       abi: tokenJson.abi,
+  //       functionName: 'mint',
+  //       args: [address, parseEther(amount.toString())],
+  //     });
+
+  //     if (await this.waitForTransactionSuccess(mintTx)) {
+  //       console.log(`Minted 100 tokens to ${address}`);
+  //       return {
+  //         result: true,
+  //         message: `Minted 100 tokens to ${address}`,
+  //         transactionHash: mintTx,
+  //       };
+  //     } else {
+  //       return {
+  //         result: false,
+  //         message: `Failed to mint tokens to ${address}`,
+  //         transactionHash: mintTx,
+  //       };
+  //     }
+  //   } catch (error) {
+  //     console.error('Error in mintTokens:', error);
+  //     return {
+  //       result: false,
+  //       message: `Error minting tokens: ${error.message}`,
+  //     };
+  //   }
+  // }
+>>>>>>> fe0dbf30b63090d8156e564b56435190fb7c6c5d
 
   async waitForTransactionSuccess(txHash: any) {
     const receipt = await this.publicClient.waitForTransactionReceipt({
@@ -125,6 +171,7 @@ export class AppService {
     return receipt;
   }
 
+<<<<<<< HEAD
   // **THIS another code snippet version is also working**
   // async mintTokens(address: any, amount: any) {
   //   // TODO: implement mintTokens
@@ -147,8 +194,11 @@ export class AppService {
 
 
 
+=======
+>>>>>>> fe0dbf30b63090d8156e564b56435190fb7c6c5d
   async checkMinterRole(address: string): Promise<boolean> {
-    const MINTER_ROLE = "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6";
+    const MINTER_ROLE =
+      '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6';
     // const MINTER_ROLE =  await this.publicClient.readContract({
     //   address: this.getContractAddress(),
     //   abi: tokenJson.abi,
@@ -163,11 +213,7 @@ export class AppService {
     return hasRole;
   }
 
-  
   getServerWalletAddress(): string {
     return this.walletClient.account.address;
   }
-
-  
 }
-
