@@ -9,7 +9,7 @@ Use the data fetched to create the proposals in the constructor of the ballot
 ```
 ### Voting dApp integration guidelines
 - [x] Build the frontend using Scaffold ETH 2 as a base
-- [ ] Build the backend using NestJS to provide the Mint method
+- [x] Build the backend using NestJS to provide the Mint method
 - [ ] Implement a single POST method
 - [ ] Request voting tokens from API
 - [ ] Use these tokens to interact with the tokenized ballot
