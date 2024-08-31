@@ -171,28 +171,21 @@ export class AppService {
     return this.walletClient.account.address;
   }
 
-  async getProposals(proposal: string): Promise<string> {
+  async getProposals(proposal: string): Promise<number> {
     const proposalsBN = await this.publicClient.readContract({
       address: this.getBallotAddress(),
       abi: ballotJson.abi,
       functionName: 'proposals',
       args: [proposal],
     });
-    return formatEther(proposalsBN as bigint);
+
+    const secondElement = proposalsBN[1];
+    const formattedProposal = formatEther(secondElement as bigint); 
+
+    const proposalAsNumber = Number(formattedProposal);
+    return proposalAsNumber * 1000000000000000000; // lazy af lol
+    
   }
-
-  // async getProposals(): Promise<string> {
-  //   const proposalsBN = await this.publicClient.readContract({
-  //     address: this.getBallotAddress(),
-  //     abi: ballotJson.abi,
-  //     functionName: 'proposals',
-  //     args: [],
-  //   });
-  //   // return formatEther(proposalsBN as bigint);
-
-  //   // const formattedEther = formatEther(proposalsBN as bigint);
-  //   return formatEther(proposalsBN as bigint);
-  // }
 
   async getWinningProposal(): Promise<number> {
     const winningProposalBN = await this.publicClient.readContract({

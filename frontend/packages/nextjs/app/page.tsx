@@ -242,6 +242,7 @@ function ApiData(params: { address: `0x${string}` }) {
         <RequestTokens address={params.address}></RequestTokens>
 
         <p><strong>VOTE RESULTS</strong><br />
+        <GetProposalsFromApi></GetProposalsFromApi>
         <WinningProposalFromApi></WinningProposalFromApi>
         </p>
       </div>
@@ -309,6 +310,31 @@ function RequestTokens(params: { address: string }) {
     </div>
   );
 }
+
+// WIP: to add other proposals & re-organize
+function GetProposalsFromApi() {
+  const [data, setData] = useState<{ result: string }>();
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/recent-votes/3")
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) return <p>Loading token address from API...</p>;
+  if (!data) return <p>No token address information</p>;
+
+  return (
+    <div>
+      <p>Donuts votes: {data.result}</p>
+    </div>
+  );
+}
+// WIP End
 
 function WinningProposalFromApi() {
   const [data, setData] = useState<{ result: string }>();
