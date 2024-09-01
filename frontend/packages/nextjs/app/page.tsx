@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useAccount, useBalance, useReadContract, useSignMessage, useWriteContract } from "wagmi";
 
+import { DeployTokenizedBallot } from "~~/components/voting-dapp/DeployTokenizedBallot";
+
 const Home: NextPage = () => {
   return (
     <>
@@ -51,6 +53,7 @@ function WalletInfo() {
         */}
         <ApiData address={address as `0x${string}`}></ApiData>
         <DelegateVotes address={address as `0x${string}`}></DelegateVotes>
+        <DeployTokenizedBallot></DeployTokenizedBallot>
       </div>
     );
   if (isConnecting)
