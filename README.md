@@ -12,11 +12,11 @@ Use the data fetched to create the proposals in the constructor of the ballot
 - [x] Build the backend using NestJS to provide the Mint method
 - [x] Implement a single POST method
 - [x] Request voting tokens from API
-- [ ] Use these tokens to interact with the tokenized ballot
-- [ ] All other interactions must be made directly on-chain
+- [x] Use these tokens to interact with the tokenized ballot
+- [x] All other interactions must be made directly on-chain
 
 ### Getting Started
-Running the backend api's:
+Make sure you have your .env file up-to-date. Running the backend api's:
 ```shell 
 cd backend
 npm install
@@ -42,7 +42,10 @@ yarn start
 
 ## Report
 
-Please check into [CONTRACT INTERACTION REPORT](REPORT.md)
+Our group collaborated on the dapp functionality. Our repo requires that the TOKEN_ADDRESS and BALLOT_ADDRESS
+you want to visualize be set in the .env file. The dapp allows you to delegate votes, deploy a new tokenized
+ballot, and cast your vote on the ballot. A possible future improvement would be to traverse prior blockchain
+transactions to infer all previously deployed contracts and then display their results in the dapp.
 
 ## References
 token contract: 0x3c9d658a9b358cf1985bc52c5476229e8b186f1f
