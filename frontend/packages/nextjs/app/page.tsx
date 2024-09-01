@@ -247,10 +247,9 @@ function ApiData(params: { address: `0x${string}` }) {
         <p>MINTING FUNCTION</p>
         <RequestTokens address={params.address}></RequestTokens>
 
-        <p><strong>VOTE RESULTS</strong><br />
+        <p><strong>VOTE RESULTS</strong></p>
         <GetProposalsFromApi></GetProposalsFromApi>
         <WinningProposalFromApi></WinningProposalFromApi>
-        </p>
       </div>
     </div>
   );
