@@ -6,6 +6,7 @@ import { useAccount, useBalance, useReadContract, useSignMessage, useWriteContra
 
 import { DeployTokenizedBallot } from "~~/components/voting-dapp/DeployTokenizedBallot";
 import { CastVotes } from "~~/components/voting-dapp/CastVotes";
+import { ViewVotes } from "~~/components/voting-dapp/ViewVotes";
 
 const Home: NextPage = () => {
   return (
@@ -49,13 +50,14 @@ function WalletInfo() {
         {/*
         <WalletAction></WalletAction>
         <WalletBalance address={address as `0x${string}`}></WalletBalance>
-        
+
         <TokenInfo address={address as `0x${string}`}></TokenInfo>
         */}
         <ApiData address={address as `0x${string}`}></ApiData>
         <DelegateVotes address={address as `0x${string}`}></DelegateVotes>
         <DeployTokenizedBallot></DeployTokenizedBallot>
         <CastVotes></CastVotes>
+        <ViewVotes></ViewVotes>
       </div>
     );
   if (isConnecting)
