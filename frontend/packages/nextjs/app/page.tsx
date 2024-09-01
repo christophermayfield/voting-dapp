@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import { useAccount, useBalance, useReadContract, useSignMessage } from "wagmi";
+import { useAccount, useBalance, useReadContract, useSignMessage, useWriteContract } from "wagmi";
 
 const Home: NextPage = () => {
   return (
@@ -50,6 +50,7 @@ function WalletInfo() {
         <TokenInfo address={address as `0x${string}`}></TokenInfo>
         */}
         <ApiData address={address as `0x${string}`}></ApiData>
+        <DelegateVotes address={address as `0x${string}`}></DelegateVotes>
       </div>
     );
   if (isConnecting)
@@ -309,6 +310,97 @@ function RequestTokens(params: { address: string }) {
       <p>Tx Hash: {data.transactionHash ? data.transactionHash : "error"}</p>
     </div>
   );
+}
+function DelegateVotes(params: { address: `0x${string}` }) {
+  const [delegateAddress, setdelegateAddress] = useState("");
+  const { data, isError, isPending, isSuccess, writeContract } = useWriteContract();
+
+  return (
+    <div className="card w-96 bg-primary text-primary-content mt-4">
+      <div className="card-body">
+        <h2 className="card-title">Delegating votes</h2>
+        <CurrentDelegate address={params.address}></CurrentDelegate>
+        <div className="form-control w-full max-w-xs my-4">
+          <label className="label">
+            <span className="label-text">Enter the address to delegate to:</span>
+          </label>
+          <input
+            type="text"
+            placeholder="0x...."
+            className="input input-bordered w-full max-w-xs"
+            value={delegateAddress}
+            onChange={e => setdelegateAddress(e.target.value)}
+          />
+        </div>
+        <button
+          className="btn btn-active btn-neutral"
+          disabled={isPending}
+          onClick={() =>
+            writeContract({
+              abi: [
+                {
+                  inputs: [
+                    {
+                      internalType: "address",
+                      name: "delegatee",
+                      type: "address"
+                    }
+                  ],
+                  name: "delegate",
+                  outputs: [],
+                  stateMutability: "nonpayable",
+                  type: "function"
+                },
+              ],
+              // TODO: get this address from API
+              address: "0x3c9d658a9b358cf1985bc52c5476229e8b186f1f",
+              functionName: 'delegate',
+              args: [delegateAddress],
+            })
+          }
+        >
+          Delegate
+        </button>
+        {isSuccess && <div>Transaction hash: <a href={`https://sepolia.etherscan.io/tx/${data}`} target="_blank">{data}</a></div>}
+        {isError && <div>Error writing contract</div>}
+      </div>
+    </div>
+  );
+}
+
+function CurrentDelegate(params: { address: `0x${string}` }) {
+  const { data, isError, isLoading } = useReadContract({
+    // TODO: get this address from API
+    address: "0x3c9d658a9b358cf1985bc52c5476229e8b186f1f",
+    abi: [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "delegates",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+    ],
+    functionName: "delegates",
+    args: [params.address],
+  });
+
+  if (isLoading) return <div>Fetching delegate…</div>;
+  if (isError) return <div>Error fetching delegate</div>;
+  // TODO: it would be cool for this to update after each `delegate` transaction
+  return <div>Current Delegate: {data.toString()}</div>;
 }
 
 // WIP: to add other proposals & re-organize
