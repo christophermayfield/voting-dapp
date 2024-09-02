@@ -134,7 +134,7 @@ export class AppService {
     return receipt;
   }
 
-
+  
 
   // **THIS another code snippet version is also working**
   // async mintTokens(address: any, amount: any) {
